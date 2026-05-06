@@ -8,34 +8,33 @@
 
 */
 
-import express from 'express'; 
-import {connectDB} from './config/dbConfig.mjs';
-
-// revisar esto ----------------------------------------
-import superHeroRoutes from './routes/superHeroRoutes.mjs';  
-// -----------------------------------------------------
-
+import express from 'express';
+import { connectDB } from './config/dbConfig.mjs';
+import superHeroRoutes from './routes/superHeroRoutes.mjs';
 import methodOverride from 'method-override';
+// -----------------------------------------------
+import expressLayouts from 'express-ejs-layouts';
 
 
-const server = express(); 
+const server = express();
 
 /**
   process.env.PORT: variable de entorno
   || 3000`: valor por defecto (fallback)
  */
-const PORT = process.env.PORT || 3000; 
-
-// -------------------------------------------
+const PORT = process.env.PORT || 3000;
 
 
-//--------------------------------------------
-// Paso 11: Se establece el motor de plantillas ejs
-server.set('view engine','ejs');
-// -------------------------------------------
+// Motor de plantillas ejs
+server.set('view engine', 'ejs');
+// Configurar express-ejs-layout
+server.use(expressLayouts);
+server.set('layout', 'layout'); // archivo base de layout
+// carpeta publica
+server.use(express.static('public'));
 
 // Middleware para parsear JSON
-server.use(express.json()); 
+server.use(express.json());
 
 // recibe el texto y lo convierte a un objeto javascript
 server.use(express.urlencoded({ extended: true }));
@@ -62,26 +61,21 @@ server.use((req, res, next) => {
 });
 
 // configuracion de rutas
-/** 
-  Se define el prefijo "/api". Por lo que todas las rutas
-  llevaran este prefijo. por ejemplo: 
-  - http://localhost:3000/api/heroes/:id
-*/
-server.use('/api', superHeroRoutes); 
+server.use('/api', superHeroRoutes);
 
 // conexion a MongoDB
-connectDB(); 
+connectDB();
 
 // Manejo de errores para rutas no encontradas
 server.use((req, res) => {
 
-    res.status(404).send({mensaje: `Ruta no encontrada`});
-}); 
+    res.status(404).send({ mensaje: `Ruta no encontrada` });
+});
 
 
 // iniciar el servidor
 server.listen(PORT, () => {
 
-    console.log(`Servidor escuchando en el puerto ${PORT}`); 
-}); 
+    console.log(`Servidor escuchando en el puerto ${PORT}`);
+});
 

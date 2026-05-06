@@ -1,119 +1,64 @@
-<!DOCTYPE html>
-<html lang=" en ">
-
-<head>
-    <meta charset=" UTF-8 ">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DB Superheroes</title>
-
-    <style>
-        body {
-            background-color: rgb(253, 253, 253);
-            margin-bottom: 150px;
-
-        }
-
-        table {
-            margin: auto;
-            border: 1px solid black;
-            border-collapse: collapse;
-            width: 97%;
-            text-align: center;
-        }
-
-        tr,
-        th,
-        td {
-            margin: auto;
-            border: 1px solid black;
-        }
-
-        th {
-            background-color: rgba(231, 73, 16, 0.759);
-        }
-
-        .btnAgregar {
-            margin-left: 89.6%;
-            margin-bottom: 5px;
-
-        }
-
-        .palabras {
-            color: rgb(34, 13, 2);
-            font-weight: 530;
-            text-decoration: none;
-        }
-
-        h1 {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            text-align: center;
-            margin-top: 2%;
-            margin-bottom: 0;
-
-        }
-    </style>
-
-</head>
 
 <body>
-    <!---------------- Etapa 2: Crear la vista principal ---------------->
-    <!---------------- Etapa 6: Crear Plantillas Básicas en EJS ---------------->
+        <main>
+            <!---------------- Etapa 2: Crear la vista principal ---------------->
+            <!---------------- Etapa 6: Crear Plantillas Básicas en EJS ---------------->
 
-    <!-- Paso 12: 
+            <!-- Paso 12: 
      Etapa 6 - 1)  En dashboard.ejs, utiliza una estructura de bucle para mostrar cada superhéroe en una tabla o tarjeta  -->
-    <h1>Lista de Superheroes</h1>
+            <h1>Lista de Superheroes</h1>
 
-    <button class="btnAgregar">
-        <a href="/api/heroes/agregar" class="palabras">Agregar Superhéroe</a>
-    </button>
-    <!-- Tabla -->
-    <table>
-        <!-- Encabezado de la Tabla -->
-        <thead>
-            <!-- Fila -->
-            <tr>
-                <!-- Columna -->
-                <th>Nombre Superheroe</th>
-                <th>Nombre real</th>
-                <th>Edad</th>
-                <th>Planeta de Origen</th>
-                <th>Debilidad</th>
-                <th>Poderes</th>
-            </tr>
-        </thead>
-        <!-- Cuerpo de la Tabla -->
-        <tbody>
-            <!-- Bucle 
+            <button class="btnAgregar">
+                <a href="/api/heroes/agregar" class="palabras">Agregar Superhéroe</a>
+            </button>
+            <!-- Tabla -->
+            <table>
+                <!-- Encabezado de la Tabla -->
+                <thead>
+                    <!-- Fila -->
+                    <tr>
+                        <!-- Columna -->
+                        <th>Nombre Superheroe</th>
+                        <th>Nombre real</th>
+                        <th>Edad</th>
+                        <th>Planeta de Origen</th>
+                        <th>Debilidad</th>
+                        <th>Poderes</th>
+                    </tr>
+                </thead>
+                <!-- Cuerpo de la Tabla -->
+                <tbody>
+                    <!-- Bucle 
                 EJS permite escribir JavaScript dentro del HTML usando las etiquetas <% %>.
                 forEach es un método de JavaScript que recorre un array y ejecuta una función 
                 por cada elemento. Por tanto, es posible utilizar métodos map, if, for, etc.
             -->
-            <% superheroes.forEach(heroe=> { %>
-                <tr>
-                    <td>
-                        <%= heroe.nombreSuperHeroe %>
-                    </td>
-                    <td>
-                        <%= heroe.nombreReal%>
-                    </td>
-                    <td>
-                        <%= heroe.edad %>
-                    </td>
-                    <td>
-                        <%= heroe.planetaOrigen %>
-                    </td>
-                    <td>
-                        <%= heroe.debilidad %>
-                    </td>
-                    <td>
-                        <%= heroe.poderes %>
-                    </td>
-                    <td>
-                        <button>
-                            <a href="/api/heroes/<%= heroe._id %>/editar" class="palabras">Editar</a </button>
-                    </td>
-                    <td>
-                        <!--
+                    <% superheroes.forEach(heroe=> { %>
+                        <tr>
+                            <td>
+                                <%= heroe.nombreSuperHeroe %>
+                            </td>
+                            <td>
+                                <%= heroe.nombreReal%>
+                            </td>
+                            <td>
+                                <%= heroe.edad %>
+                            </td>
+                            <td>
+                                <%= heroe.planetaOrigen %>
+                            </td>
+                            <td>
+                                <%= heroe.debilidad %>
+                            </td>
+                            <td>
+                                <%= heroe.poderes %>
+                            </td>
+                            <td>
+                                <button>
+                                    <a href="/api/heroes/<%= heroe._id %>/editar" class="palabras">Editar</a </button>
+                            </td>
+                            <td>
+                                <!--
                             No hay un formulario para el metodo delete. 
                             por lo que el boton debe estar dentro de <fomr> (formulario)
                             el cual en action tendra la estructura del edit superhero
@@ -133,18 +78,18 @@
                             -----------------------------------------------------------
                             cada boton se mostrara al lado de cada superheroe
                         -->
-                        <form action="/api/heroes/<%= heroe._id %>?_method=DELETE" method="POST">
-                            <button type="submit"
-                                onclick="return confirm('¿Seguro que querés eliminar este superhéroe?')"
-                                class="palabras">Eliminar</button>
-                        </form>
-                    </td>
-                </tr>
+                                <form action="/api/heroes/<%= heroe._id %>?_method=DELETE" method="POST">
+                                    <button type="submit"
+                                        onclick="return confirm('¿Seguro que querés eliminar este superhéroe?')"
+                                        class="palabras">Eliminar</button>
+                                </form>
+                            </td>
+                        </tr>
 
-                <% }); %>
-        </tbody>
-    </table>
+                        <% }); %>
+                </tbody>
+            </table>
+        </main>
 
+    
 </body>
-
-</html>

@@ -28,17 +28,32 @@ const router = express.Router();
 /** 
  * Endpoints GET
 */
+
+/** 
+    Cuando el usuario entra en el link correspondiente,
+    la respuesta utiliza res.render() para convertir 
+    el archivo EJS en una vista dinámica, devuelve el 
+    dashboard y además le agrega el título indicado.
+*/
+router.get('/', (req, res) => {
+  res.render('dashboard', { title: 'Página Principal' });
+});
+
+router.get('/heroes/agregar', (req, res) => {
+  res.render('addSuperhero', { title: 'Agregar Superheroe' });
+});
+
+router.get('/heroes/editar/:id', (req, res) => {
+  res.render('editSuperhero', { title: 'Editar Superheroe' });
+});
+
+
 // http://localhost:3000/api/heroes
 router.get('/heroes', obtenerTodosLosSuperheroesController);
 
 
 // http://localhost:3000/api/heroes/mayores-30
 router.get('/heroes/mayores-30', obtenerSuperheroesMayoresDe30Controller);
-
-// GET - AGREGAR —> muestra el formulario vacío
-router.get('/heroes/agregar', (req, res) => {
-  res.render('addSuperhero');
-});
 
 // GET - EDITAR —> recibe los datos de la request
 router.get('/heroes/:id/editar', obtenerSuperheroePorIdEditarController);
