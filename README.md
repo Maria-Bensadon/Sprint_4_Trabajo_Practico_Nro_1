@@ -3,7 +3,7 @@
 
 --- 
 
-# Sprint 3 - Trabajo Práctico Nro 3: Dashboard Dinámico
+# Sprint 4 - Trabajo Práctico Nro 1: EJS Layouts - navbar y footer
 
 ### Requerimientos básicos generales
 1. Levantar un servidor Express en el puerto 3005.
@@ -15,7 +15,18 @@
     - /superheroes/edad/mayorA30: Devuelve una lista de superhéroes mayores de 30 años
     que además sean del planeta Tierra y tengan al menos 2 poderes.
 
-### Requerimientos Específicos del Trabajo Práctico N°3
+### Requerimientos Específicos del Trabajo Práctico N°4
+
+El objetivo de este practico es que refuercen los conceptos utilizados para generar vistas con EJS Layouts.
+
+1) Leer toda la documentacion
+2) Generar un navbar que contenga los accesos directos a pagina principal(puede ser un landing), 
+la lista de superheroes, agregar superheroes, si lo desean pueden agregar paginas adicionales
+3) Generar un footer que tenga un copyright, se pueden incluir si lo desean datos de contacto
+4) Generar un Layout que contenga el navbar y el footer
+5) Generar cada una de las vistas que deseo se puedan renderizar
+6) Prueba completa de funcionalidad, incluida las validaciones
+7) Subir todo a Github y colocar el enlace Epixum
 
 
 <details>
