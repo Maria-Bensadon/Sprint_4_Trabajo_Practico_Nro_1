@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Superhéroes</title>
+     <style>
+        body {
+            background-color: rgb(253, 253, 253);
+            margin-bottom: 150px;
+
+        }
+
+        table {
+            margin: auto;
+            border: 1px solid black;
+            border-collapse: collapse;
+            width: 97%;
+            text-align: center;
+        }
+
+        tr,
+        th,
+        td {
+            margin: auto;
+            border: 1px solid black;
+        }
+
+        th {
+            background-color: rgba(231, 73, 16, 0.759);
+        }
+
+        .btnAgregar {
+            margin-left: 89.6%;
+            margin-bottom: 5px;
+            
+        }
+
+        .palabras {
+            color: rgb(34, 13, 2);
+            font-weight: 530;
+            text-decoration: none;
+        }
+
+        h1 {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            text-align: center;
+            margin-top: 2%;
+            margin-bottom: 0;
+            
+        }
+    </style>
+ 
+</head>
+<body>
+    <!---------------- Etapa 4: Implementar Función de Editar Superhéroes ---------------->
+
+     <h1>Editar superheroes</h1>
+
+     <!-- 
+        El formulario envía un POST pero ?_method=PUT le indica a method-override
+        que lo trate como PUT. Esto es necesario porque los formularios HTML
+        no soportan el método PUT de forma nativa.
+        La URL incluye el _id del superhéroe para que el servidor sepa cuál editar.
+
+        <%= superheroe._id %> => protege el id del superheroe. Se utiliza el escape de datos para evitar riesgos 
+        de seguridad. Regla práctica:
+            • Datos que vienen del usuario → siempre <%=   %>
+            • HTML que del programador, debido a ser de confianza → <%-   %> 
+
+        ?_method=PUT => convierte la solicitud post en put antes de llegar a la router
+    -->
+    <form action="/api/heroes/<%= superheroe._id %>/editar?_method=PUT" method="post">
+
+         <!-- 
+            value="<%= %>" precarga el campo con el dato actual
+            del superhéroe traído desde MongoDB.
+            El usuario puede modificarlo y enviar el formulario para que 
+            el controller actualice el documento en la base de datos.
+        -->
+        <label>Nombre Superhéroe</label>
+        <input type="text" name="nombreSuperHeroe" value="<%= superheroe.nombreSuperHeroe %>" required minlength="3" maxlength="60"> <br>
+
+        <label>Nombre Real</label>
+        <input type="text" name="nombreReal" value="<%= superheroe.nombreReal %>" required minlength="3" maxlength="60" > <br>
+
+        <label>Edad</label>
+        <input type="number" name="edad" required min="0" value="<%= superheroe.edad %>"> <br>
+
+        <label>Planeta de Origen</label>
+        <input type="text" name="planetaOrigen" value="<%= superheroe.planetaOrigen %>"> <br>
+
+        <label>Debilidad</label>
+        <input type="text" name="debilidad" value="<%= superheroe.debilidad %>" required> <br>
+
+         <!-- 
+            Las propiedades: poderes, aliados y enemigos son arrays.
+            Al mostrarse en el input se convierten a string
+            separados por comas.
+            Cuando ingresamos los datos, el controller los convierte de vuelta a array
+            utilizando la funcion split(',') para poder guardarlo.
+        -->
+
+        <label>Poderes</label>
+        <input type="text" name="poderes" value="<%= superheroe.poderes %>" required> <br>
+
+        <label>Aliados</label>
+        <input type="text" name="aliados" value="<%= superheroe.aliados %>" required> <br>
+
+        <label>Enemigos</label>
+        <input type="text" name="enemigos" value="<%= superheroe.enemigos %>" required> <br>
+
+        <label>Creador</label>
+        <input type="text" name="creador" value="<%= superheroe.creador %>" required> <br>
+
+        <!-- Botón -->
+        <button type="submit">Guardar</button>
+        <a href="/api/heroes">Volver al dashboard</a>
+
+    </form>
+
+
+</body>
+</html>
