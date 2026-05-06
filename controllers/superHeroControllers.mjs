@@ -224,7 +224,7 @@ export async function crearSuperheroeController(req, res) {
     }
 
     // redirige al dashboard despues de actualizar
-    res.redirect('/api/heroes');
+    res.redirect('/api');
   }
 
   catch (error) {
@@ -271,7 +271,7 @@ export async function actualizarSuperheroeController(req, res) {
     }
 
     // redirige al dashboard despues de actualizar
-    res.redirect('/api/heroes');
+    res.redirect('/api');
 
   } catch (error) {
 
@@ -317,7 +317,7 @@ export async function eliminarSuperheroePorIdController(req, res) {
     }
     // ---------------------------------------------------------------------------------
 
-    res.redirect('/api/heroes');
+    res.redirect('/api');
 
 
   } catch (error) {

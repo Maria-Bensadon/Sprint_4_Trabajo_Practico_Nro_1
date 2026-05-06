@@ -35,9 +35,11 @@ const router = express.Router();
     el archivo EJS en una vista dinámica, devuelve el 
     dashboard y además le agrega el título indicado.
 */
-router.get('/', (req, res) => {
-  res.render('dashboard', { title: 'Página Principal' });
-});
+
+
+// router.get('/', (req, res) => {
+//   res.render('dashboard', { superheroe, title: 'Página Principal' });
+// });
 
 router.get('/heroes/agregar', (req, res) => {
   res.render('addSuperhero', { title: 'Agregar Superheroe' });
@@ -49,7 +51,7 @@ router.get('/heroes/editar/:id', (req, res) => {
 
 
 // http://localhost:3000/api/heroes
-router.get('/heroes', obtenerTodosLosSuperheroesController);
+router.get('/', obtenerTodosLosSuperheroesController);
 
 
 // http://localhost:3000/api/heroes/mayores-30
