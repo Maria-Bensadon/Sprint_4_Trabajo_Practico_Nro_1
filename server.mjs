@@ -61,6 +61,11 @@ server.use((req, res, next) => {
     next();
 });
 
+// en caso de usar "/" se redirija a "/api"
+server.get('/', (req, res) => {
+  res.redirect('/api');
+});
+
 // configuracion de rutas
 server.use('/api', superHeroRoutes);
 
