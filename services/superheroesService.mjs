@@ -17,7 +17,7 @@
 */
 
 import superHero from "../models/superHero.mjs";
-import superHeroRepository from "../repositories/SuperHeroRepository.mjs";
+import superHeroRepository from "../repositories/superHeroRepository.mjs";
 
 // ---------------- Metodo GET --------------------------
 
