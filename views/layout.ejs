@@ -9,14 +9,19 @@
 </head>
 
 <body>
-    <!-- Navbar -->
+    <!-------------  ESTRUCTURA BASE ------------->
+    <!-- 
+        Navbar: en esta parte se incluye el contenido de la barra de navegacion 
+        del archivo navbar en la carpeta partials 
+    -->
     <%- include('partials/navbar') %>
 
         <main>
+            <!-- se inserta el contenido de cada vista -->
             <%- body %>
         </main>
 
-        <!-- Footer -->
+        <!-- Footer: hace lo mismo -->
         <%- include('partials/footer') %>
 </body>
 

@@ -14,6 +14,7 @@ import superHeroRoutes from './routes/superHeroRoutes.mjs';
 import methodOverride from 'method-override';
 // -----------------------------------------------
 import expressLayouts from 'express-ejs-layouts';
+import 'dotenv/config';
 
 
 const server = express();

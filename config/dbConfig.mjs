@@ -20,14 +20,24 @@ setServers(["1.1.1.1", "8.8.8.8"]);
 export async function connectDB() {
 
     try {
-        await mongoose.connect('mongodb+srv://grupo-05:grupo-05@cluster0.blryo.mongodb.net/NodeMod3Cohorte5');
+        /**
+            Hardcodear significa escribir un valor fijo directamente en el código, 
+            en lugar de guardarlo en una variable o archivo de configuración.
+
+            await mongoose.connect('mongodb+srv://grupo-05:grupo-05@cluster0.blryo.mongodb.net/NodeMod3Cohorte5');
+
+            * process.env.MONGODB_URI = es donde va esa URL, el server lee la direccion desde el archivo .env 
+            * process.env = es un objeto de Node.js que contiene todas las variables de entorno. 
+            * MONGODB_URI = es el nombre de la variable dentro de ese objeto.
+        */
+        await mongoose.connect(process.env.MONGODB_URI);
         console.log(`Conexión exitosa a MongoDB`);
     }
 
     catch (error) {
 
         console.error(`Error al conectar a MongoDB:`, error);
-        
+
         /** 
          * process es el proceso actual, 
          * .exit() es el metodo para terminarlo
