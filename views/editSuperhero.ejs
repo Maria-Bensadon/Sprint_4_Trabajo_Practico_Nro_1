@@ -17,7 +17,7 @@
 
         ?_method=PUT => convierte la solicitud post en put antes de llegar a la router
     -->
-        <form action="/api/heroes/<%= superheroe._id %>/editar?_method=PUT" method="post">
+        <form action="/api/heroes/<%= superheroe._id %>/editar?_method=PUT" method="post" novalidate>
 
             <!-- 
             value="<%= %>" precarga el campo con el dato actual
@@ -69,6 +69,163 @@
 
         </form>
 
+
     </main>
 
+        <script>
+
+        /*
+            Buscamos el formulario principal de la página utilizando querySelector("form").
+            querySelector permite seleccionar elementos HTML usando selectores similares a CSS.
+        
+            En este caso:
+            - "form" selecciona el primer formulario encontrado.
+        
+            Luego se addEventListener("submit", ...):
+            - addEventListener escucha eventos específicos.
+            - "submit" detecta cuando el usuario intenta enviar el formulario.
+        
+            Esto permite intervenir el envío antes de que llegue al servidor,
+            para validar datos y evitar errores.
+        */
+        document.querySelector("form").addEventListener("submit", function (eventoFormulario) {
+
+            /*
+                Creamos un array vacío llamado errores.
+        
+                Un array permite almacenar múltiples mensajes de error.
+                Si alguna validación falla, iremos agregando mensajes aquí.
+                Luego podremos mostrarlos todos juntos al usuario.
+            */
+            let errores = [];
+
+
+            /*
+                Obtenemos el valor ingresado en el campo nombreSuperHeroe.
+        
+                document.querySelector('[name="nombreSuperHeroe"]'):
+                - Busca el input cuyo atributo name sea nombreSuperHeroe.
+        
+                .value:
+                - Obtiene el contenido escrito por el usuario.
+        
+                .trim():
+                - Elimina espacios en blanco al inicio y final.
+                - Ayuda a evitar entradas inválidas por espacios innecesarios.
+            */
+            const nombreSuperHeroeIngresado = document.querySelector('[name="nombreSuperHeroe"]').value.trim();
+
+            if (nombreSuperHeroeIngresado.length < 3 || nombreSuperHeroeIngresado.length > 60) {
+
+                /* ---------------------------------------------------------------------------------------------
+                    Validamos longitud del nombre del superhéroe.
+            
+                    .length:
+                    - Devuelve cantidad de caracteres.
+            
+                    Si tiene menos de 3 o más de 60:
+                    - Se considera inválido.
+
+                   push():
+                   - Agrega un nuevo elemento al array.
+       
+                   Guardamos mensaje descriptivo para informar al usuario.
+               */
+                errores.push("El nombre del superhéroe debe tener entre 3 y 60 caracteres.");
+            }
+
+            /* ---------------------------------------------------------------------------------------------
+                Obtenemos el nombre real ingresado y limpiamos espacios externos.
+            */
+            const nombreRealIngresado = document.querySelector('[name="nombreReal"]').value.trim();
+
+            /*
+               Validamos longitud del nombre real.
+           */
+            if (nombreRealIngresado.length < 3 || nombreRealIngresado.length > 60) {
+
+                errores.push("El nombre real debe tener entre 3 y 60 caracteres.");
+            }
+
+            /* ---------------------------------------------------------------------------------------------
+                Obtenemos la edad ingresada.
+        
+                parseInt():
+                - Convierte texto a número entero.
+                - Base 10 asegura interpretación decimal.
+            */
+            const edadIngresada = parseInt(document.querySelector('[name="edad"]').value, 10);
+
+            /*
+                Validamos edad:
+        
+                isNaN():
+                - Verifica si el valor no es numérico.
+        
+                edadIngresada < 0:
+                - Evita edades negativas.
+            */
+            if (isNaN(edadIngresada) || edadIngresada < 0) {
+
+                errores.push("La edad debe ser mayor o igual a 0.");
+            }
+
+            const planetaOrigenIngresado = (document.querySelector('[name="planetaOrigen"]').value.trim());
+
+            if ((planetaOrigenIngresado.length < 3) || (planetaOrigenIngresado.length > 60)) {
+                errores.push("El planeta de origen debe ser mayor 3 caracteres y menor a 60");
+            }
+
+
+            /**  ---------------------------------------------------------------------------------------------
+                Se utiliza document.querySelector('[name="debilidad"]'):
+                - Busca el input cuyo atributo name sea nombreSuperHeroe
+                - trim() elimina los espacios en blanco presentes en el valor
+             
+            */
+
+            const debilidadIngresada = document.querySelector('[name="debilidad"]').value.trim();
+
+            /**  ---------------------------------------------------------------------------------------------
+                se corrobora la longitud mayor 3 y menor a 60.
+             
+            */
+            if (debilidadIngresada.length < 3 || debilidadIngresada.length > 60) {
+                errores.push("La debilidad debe tener entre 3 y 60 caracteres.");
+            }
+
+
+            /*  
+                Si el array contiene errores:
+            */
+            if (errores.length > 0) {
+
+                /*
+                    preventDefault():
+                    - Detiene el comportamiento normal del formulario.
+                    - Evita que se envíe al servidor.
+        
+                    Esto permite corregir errores antes del envío.
+                */
+                eventoFormulario.preventDefault();
+
+                /*
+                    alert():
+                    - Muestra ventana emergente al usuario.
+        
+                    join("\n"):
+                    - Une todos los mensajes del array.
+                    - "\n" crea saltos de línea para mejor lectura.
+                */
+                alert(errores.join("\n"));
+            }
+
+            /*
+                Si no hay errores:
+                - El formulario continúa su envío normalmente.
+            */
+
+        });
+
+    </script>
 </body>
