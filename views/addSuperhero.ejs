@@ -161,6 +161,15 @@
                 errores.push("La debilidad debe tener entre 3 y 60 caracteres.");
             }
 
+            const poderesIngresados = document.querySelector('[name="poderes"]').value.trim();
+
+            /**  ---------------------------------------------------------------------------------------------
+                se corrobora la longitud mayor 3 y menor a 60.
+             
+            */
+            if (poderesIngresados.length < 3 || poderesIngresados.length > 60) {
+                errores.push("cada poder ingresado debe tener entre 3 y 60 caracteres.");
+            }
 
             /*  
                 Si el array contiene errores:

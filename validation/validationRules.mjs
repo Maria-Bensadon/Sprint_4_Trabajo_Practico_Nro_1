@@ -85,6 +85,7 @@ export const validarHeroe = () => [
     //     .isArray({ min: 1 })
     //     .withMessage('El array debe tener al menos un elemento'),
 
+    // REVISAR--------------------------------------------------------
     // valida cada elemento del array
     body('poderes')
         .notEmpty()
