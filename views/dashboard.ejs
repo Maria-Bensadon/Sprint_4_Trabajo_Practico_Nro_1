@@ -1,92 +1,59 @@
 
 <body>
-        <main>
-            <!---------------- Etapa 2: Crear la vista principal ---------------->
-            <!---------------- Etapa 6: Crear Plantillas Básicas en EJS ---------------->
+    <main>
+        <h1>Lista de Superheroes</h1>
 
-            <!-- Paso 12: 
-     Etapa 6 - 1)  En dashboard.ejs, utiliza una estructura de bucle para mostrar cada superhéroe en una tabla o tarjeta  -->
-            <h1>Lista de Superheroes</h1>
-
-            <!-- Tabla -->
-            <table>
-                <!-- Encabezado de la Tabla -->
-                <thead>
-                    <!-- Fila -->
+        <table>
+            <thead>
+                <!-- Fila -->
+                <tr>
+                    <!-- Columna -->
+                    <th>Nombre Superheroe</th>
+                    <th>Nombre real</th>
+                    <th>Edad</th>
+                    <th>Planeta de Origen</th>
+                    <th>Debilidad</th>
+                    <th>Poderes</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% superheroes.forEach(heroe=> { %>
                     <tr>
-                        <!-- Columna -->
-                        <th>Nombre Superheroe</th>
-                        <th>Nombre real</th>
-                        <th>Edad</th>
-                        <th>Planeta de Origen</th>
-                        <th>Debilidad</th>
-                        <th>Poderes</th>
+                        <td>
+                            <%= heroe.nombreSuperHeroe %>
+                        </td>
+                        <td>
+                            <%= heroe.nombreReal%>
+                        </td>
+                        <td>
+                            <%= heroe.edad %>
+                        </td>
+                        <td>
+                            <%= heroe.planetaOrigen %>
+                        </td>
+                        <td>
+                            <%= heroe.debilidad %>
+                        </td>
+                        <td>
+                            <%= heroe.poderes %>
+                        </td>
+                        <td>
+                            <button>
+                                <a href="/api/heroes/<%= heroe._id %>/editar" class="palabras">Editar</a </button>
+                        </td>
+                        <td>
+                            <form action="/api/heroes/<%= heroe._id %>?_method=DELETE" method="POST">
+                                <button type="submit"
+                                    onclick="return confirm('¿Seguro que querés eliminar este superhéroe?')"
+                                    class="palabras">Eliminar</button>
+                            </form>
+                        </td>
                     </tr>
-                </thead>
-                <!-- Cuerpo de la Tabla -->
-                <tbody>
-                    <!-- Bucle 
-                EJS permite escribir JavaScript dentro del HTML usando las etiquetas <% %>.
-                forEach es un método de JavaScript que recorre un array y ejecuta una función 
-                por cada elemento. Por tanto, es posible utilizar métodos map, if, for, etc.
-            -->
-                    <% superheroes.forEach(heroe=> { %>
-                        <tr>
-                            <td>
-                                <%= heroe.nombreSuperHeroe %>
-                            </td>
-                            <td>
-                                <%= heroe.nombreReal%>
-                            </td>
-                            <td>
-                                <%= heroe.edad %>
-                            </td>
-                            <td>
-                                <%= heroe.planetaOrigen %>
-                            </td>
-                            <td>
-                                <%= heroe.debilidad %>
-                            </td>
-                            <td>
-                                <%= heroe.poderes %>
-                            </td>
-                            <td>
-                                <button>
-                                    <a href="/api/heroes/<%= heroe._id %>/editar" class="palabras">Editar</a </button>
-                            </td>
-                            <td>
-                                <!--
-                            No hay un formulario para el metodo delete. 
-                            por lo que el boton debe estar dentro de <fomr> (formulario)
-                            el cual en action tendra la estructura del edit superhero
 
-                            <%= heroe._id %> Se utiliza el escape de datos para evitar riesgos 
-                            de seguridad. Regla práctica:
-                                • Datos que vienen del usuario → siempre <%= %>
-                                • HTML que del programador, debido a ser de confianza → <%- %> 
-                                • Lógica de control (sin el guion ni el igual) -> <% %> 
-                                (bucles, condicionales, cierres de llaves).
+                    <% }); %>
+            </tbody>
+        </table>
+    </main>
 
-                            ?_method=DELETE = convertira la solicitud post en delete
-                            -----------------------------------------------------------
-                            a su vez se realiza la delegacion de eventos, cuando ocurra el 
-                            click, se mostrara la consulta para verificar la decision de eliminar
-                            el superheroe seleccionado. 
-                            -----------------------------------------------------------
-                            cada boton se mostrara al lado de cada superheroe
-                        -->
-                                <form action="/api/heroes/<%= heroe._id %>?_method=DELETE" method="POST">
-                                    <button type="submit"
-                                        onclick="return confirm('¿Seguro que querés eliminar este superhéroe?')"
-                                        class="palabras">Eliminar</button>
-                                </form>
-                            </td>
-                        </tr>
 
-                        <% }); %>
-                </tbody>
-            </table>
-        </main>
-
-    
 </body>

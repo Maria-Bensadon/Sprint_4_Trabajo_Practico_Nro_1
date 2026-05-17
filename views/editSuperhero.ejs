@@ -1,30 +1,10 @@
 <body>
     <main>
-        <!---------------- Etapa 4: Implementar Función de Editar Superhéroes ---------------->
 
         <h1>Editar superheroes</h1>
 
-        <!-- 
-        El formulario envía un POST pero ?_method=PUT le indica a method-override
-        que lo trate como PUT. Esto es necesario porque los formularios HTML
-        no soportan el método PUT de forma nativa.
-        La URL incluye el _id del superhéroe para que el servidor sepa cuál editar.
-
-        <%= superheroe._id %> => protege el id del superheroe. Se utiliza el escape de datos para evitar riesgos 
-        de seguridad. Regla práctica:
-            • Datos que vienen del usuario → siempre <%=   %>
-            • HTML que del programador, debido a ser de confianza → <%-   %> 
-
-        ?_method=PUT => convierte la solicitud post en put antes de llegar a la router
-    -->
         <form action="/api/heroes/<%= superheroe._id %>/editar?_method=PUT" method="post" novalidate>
 
-            <!-- 
-            value="<%= %>" precarga el campo con el dato actual
-            del superhéroe traído desde MongoDB.
-            El usuario puede modificarlo y enviar el formulario para que 
-            el controller actualice el documento en la base de datos.
-        -->
             <label>Nombre Superhéroe</label>
             <input type="text" name="nombreSuperHeroe" value="<%= superheroe.nombreSuperHeroe %>" required minlength="3"
                 maxlength="60"> <br>
@@ -42,14 +22,6 @@
 
             <label>Debilidad</label>
             <input type="text" name="debilidad" value="<%= superheroe.debilidad %>" required> <br>
-
-            <!-- 
-            Las propiedades: poderes, aliados y enemigos son arrays.
-            Al mostrarse en el input se convierten a string
-            separados por comas.
-            Cuando ingresamos los datos, el controller los convierte de vuelta a array
-            utilizando la funcion split(',') para poder guardarlo.
-        -->
 
             <label>Poderes</label>
             <input type="text" name="poderes" value="<%= superheroe.poderes %>" required> <br>
@@ -72,159 +44,50 @@
 
     </main>
 
-        <script>
+    <script>
 
-        /*
-            Buscamos el formulario principal de la página utilizando querySelector("form").
-            querySelector permite seleccionar elementos HTML usando selectores similares a CSS.
-        
-            En este caso:
-            - "form" selecciona el primer formulario encontrado.
-        
-            Luego se addEventListener("submit", ...):
-            - addEventListener escucha eventos específicos.
-            - "submit" detecta cuando el usuario intenta enviar el formulario.
-        
-            Esto permite intervenir el envío antes de que llegue al servidor,
-            para validar datos y evitar errores.
-        */
-        document.querySelector("form").addEventListener("submit", function (eventoFormulario) {
+        const formularios = document.querySelector("form");
+        formularios.addEventListener("submit", (formulario) => {
 
-            /*
-                Creamos un array vacío llamado errores.
-        
-                Un array permite almacenar múltiples mensajes de error.
-                Si alguna validación falla, iremos agregando mensajes aquí.
-                Luego podremos mostrarlos todos juntos al usuario.
-            */
+            const nombreSuperHeroeIngresado = document.querySelector('[name="nombreSuperHeroe"]').value.trim();
+            const nombreRealIngresado = document.querySelector('[name="nombreReal"]').value.trim();
+            const edadIngresada = parseInt(document.querySelector('[name="edad"]').value, 10);
+            const planetaOrigenIngresado = (document.querySelector('[name="planetaOrigen"]').value.trim());
+            const debilidadIngresada = document.querySelector('[name="debilidad"]').value.trim();
+            const poderesIngresados = document.querySelector('[name="poderes"]').value.trim().split(",").map(p => p.trim());
+
             let errores = [];
 
-
-            /*
-                Obtenemos el valor ingresado en el campo nombreSuperHeroe.
-        
-                document.querySelector('[name="nombreSuperHeroe"]'):
-                - Busca el input cuyo atributo name sea nombreSuperHeroe.
-        
-                .value:
-                - Obtiene el contenido escrito por el usuario.
-        
-                .trim():
-                - Elimina espacios en blanco al inicio y final.
-                - Ayuda a evitar entradas inválidas por espacios innecesarios.
-            */
-            const nombreSuperHeroeIngresado = document.querySelector('[name="nombreSuperHeroe"]').value.trim();
-
             if (nombreSuperHeroeIngresado.length < 3 || nombreSuperHeroeIngresado.length > 60) {
-
-                /* ---------------------------------------------------------------------------------------------
-                    Validamos longitud del nombre del superhéroe.
-            
-                    .length:
-                    - Devuelve cantidad de caracteres.
-            
-                    Si tiene menos de 3 o más de 60:
-                    - Se considera inválido.
-
-                   push():
-                   - Agrega un nuevo elemento al array.
-       
-                   Guardamos mensaje descriptivo para informar al usuario.
-               */
                 errores.push("El nombre del superhéroe debe tener entre 3 y 60 caracteres.");
             }
 
-            /* ---------------------------------------------------------------------------------------------
-                Obtenemos el nombre real ingresado y limpiamos espacios externos.
-            */
-            const nombreRealIngresado = document.querySelector('[name="nombreReal"]').value.trim();
-
-            /*
-               Validamos longitud del nombre real.
-           */
             if (nombreRealIngresado.length < 3 || nombreRealIngresado.length > 60) {
-
                 errores.push("El nombre real debe tener entre 3 y 60 caracteres.");
             }
 
-            /* ---------------------------------------------------------------------------------------------
-                Obtenemos la edad ingresada.
-        
-                parseInt():
-                - Convierte texto a número entero.
-                - Base 10 asegura interpretación decimal.
-            */
-            const edadIngresada = parseInt(document.querySelector('[name="edad"]').value, 10);
-
-            /*
-                Validamos edad:
-        
-                isNaN():
-                - Verifica si el valor no es numérico.
-        
-                edadIngresada < 0:
-                - Evita edades negativas.
-            */
             if (isNaN(edadIngresada) || edadIngresada < 0) {
-
                 errores.push("La edad debe ser mayor o igual a 0.");
             }
-
-            const planetaOrigenIngresado = (document.querySelector('[name="planetaOrigen"]').value.trim());
 
             if ((planetaOrigenIngresado.length < 3) || (planetaOrigenIngresado.length > 60)) {
                 errores.push("El planeta de origen debe ser mayor 3 caracteres y menor a 60");
             }
 
-
-            /**  ---------------------------------------------------------------------------------------------
-                Se utiliza document.querySelector('[name="debilidad"]'):
-                - Busca el input cuyo atributo name sea nombreSuperHeroe
-                - trim() elimina los espacios en blanco presentes en el valor
-             
-            */
-
-            const debilidadIngresada = document.querySelector('[name="debilidad"]').value.trim();
-
-            /**  ---------------------------------------------------------------------------------------------
-                se corrobora la longitud mayor 3 y menor a 60.
-             
-            */
             if (debilidadIngresada.length < 3 || debilidadIngresada.length > 60) {
                 errores.push("La debilidad debe tener entre 3 y 60 caracteres.");
             }
 
+            poderesIngresados.forEach(poder => {
+                if (poder.length < 3 || poder.length > 60) {
+                    errores.push("cada poder ingresado debe tener entre 3 y 60 caracteres.");
+                }
+            });
 
-            /*  
-                Si el array contiene errores:
-            */
             if (errores.length > 0) {
-
-                /*
-                    preventDefault():
-                    - Detiene el comportamiento normal del formulario.
-                    - Evita que se envíe al servidor.
-        
-                    Esto permite corregir errores antes del envío.
-                */
-                eventoFormulario.preventDefault();
-
-                /*
-                    alert():
-                    - Muestra ventana emergente al usuario.
-        
-                    join("\n"):
-                    - Une todos los mensajes del array.
-                    - "\n" crea saltos de línea para mejor lectura.
-                */
+                formulario.preventDefault();
                 alert(errores.join("\n"));
             }
-
-            /*
-                Si no hay errores:
-                - El formulario continúa su envío normalmente.
-            */
-
         });
 
     </script>
